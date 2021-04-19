@@ -1,0 +1,4 @@
+/.cache/
+/build/
+/src/main.c
+*.txt
