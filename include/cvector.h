@@ -19,7 +19,7 @@ typedef struct Vector
  *
  * init new vector struct
  *
- * p.s. use macro INIT_VECTOR to init vecot by default size
+ * p.s. use macro INIT_VECTOR to init vector by default size
  *
  * vector: you vector struct
  *
@@ -68,6 +68,8 @@ void cVectorAddItem(Vector* vector, void* data);
  *
  * index: index data from vector
  *
+ * return: data in vector as void*
+ * 
  * error:
  * index out of range
  *
