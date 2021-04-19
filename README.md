@@ -41,4 +41,30 @@ My realization vector from c++ in C
 3. FREE_VECTOR
    * Free data in vector and set capacity to 0
    * Params:
-     * vector: you vector 
+     * vector: you vector
+
+Example:
+```c
+    #include <stdio.h>
+    #include <cvector.h>
+
+    int main()
+    {
+        Vector vec;
+        int a = 56;
+
+        INIT_VECTOR(vec, sizeof(int));
+
+        cVectorAddItem(&vec, &a);
+        a = 3;
+        cVectorAddItem(&vec, &a);
+
+        GET_VECTOR_ITEM(a, vec, 1);
+
+        printf("%i\n", a);
+
+        FREE_VECTOR(vec);
+
+        return 0;
+    }
+```
