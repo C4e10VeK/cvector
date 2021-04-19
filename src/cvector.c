@@ -1,7 +1,6 @@
 #include <cvector.h>
 #include <stdlib.h>
 #include <memory.h>
-#include <string.h>
 
 #define START_CAPACITY 10
 
@@ -45,6 +44,11 @@ void cVectorAddItem(Vector *vector, void *data)
 
 void* cVectorGetItem(Vector *vector, size_t index)
 {
-    index = index > vector->capacity ? 0 : index;
+    if (index >= vector->capacity) 
+    {
+        fprintf(stderr, "index out of range\n");
+        exit(1);
+    }
+
     return (vector->_items + index * vector->_typesize);
 }
