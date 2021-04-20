@@ -18,6 +18,8 @@ void cVectorInit(Vector *vector, size_t capacity, size_t typesize)
 
 void cVectorResize(Vector *vector, size_t newSize)
 {
+    void* pm;
+
     if (newSize < 1)
     {
         free(vector->_items);
@@ -27,8 +29,14 @@ void cVectorResize(Vector *vector, size_t newSize)
         return;
     }
 
+    pm = realloc(vector->_items, newSize * vector->_typesize);
+    if (pm == NULL) 
+    {
+        return;
+    }
+
     vector->_capacity = newSize;   
-    vector->_items = realloc(vector->_items, newSize);
+    vector->_items = pm;
 }
 
 void cVectorAddItem(Vector *vector, void *data)
@@ -44,7 +52,7 @@ void cVectorAddItem(Vector *vector, void *data)
 
 void cVectorSetItemByIndex(Vector *vector, void *data, size_t index)
 {
-    if (index > vector->size - 1) 
+    if (index >= vector->size) 
     {
         fprintf(stderr, "Index out of range in %s\n", __FUNCTION__);
         exit(1);
