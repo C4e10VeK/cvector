@@ -63,7 +63,7 @@ void cVectorAddItem(Vector* vector, void* data);
  *
  * get data from vector from index
  *
- * p.s. use macro GET_VECTOR_ITEM to get value by type using in vector
+ * p.s. use macro GET_VECTOR_ITEM to get value by type used in vector
  * 
  * vector: you vector struct
  *
