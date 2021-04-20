@@ -5,23 +5,23 @@ My realization vector from c++ in C
 1. cVectorInit(Vector*, capacity, typeSize)
    * Init new vector structur
    * Params:
-      * Vector*: you vector
+      * Vector*: your vector
       * capacity: start vector size, if size = 0 then size = defaultsize (10)
       * typeSize: syze of type which contains in vector
 2. cVectorResize(Vector*, newSize)
    * Resize vector
    * Params:
-      * Vector*: you vector
+      * Vector*: your vector
       * newSize: new vector size if size < 1 then vector free
 3. cVectorAddItem(Vector*, data)
    * Emplace data back vector
    * Params:
-      * Vector*: you vector
+      * Vector*: your vector
       * data: data to add vector
 4. cVectorAddItemByIndex(Vector*, data, index)
    * emplace data in vector by index
    * Params:
-     * Vector*: you vector
+     * Vector*: your vector
      * data: data to add vector
      * index: index data in vector
    * error: index out of range
@@ -37,18 +37,18 @@ My realization vector from c++ in C
 1. INIT_VECTOR(vector, typeSize)
    * Init new vector by default size
    * Params:
-     * vector: you vector
+     * vector: your vector
      * typeSize: syze of type which contains in vector
 2. GET_VECTOR_ITEM(type, vector, index)
    * Get value by type used in vector
    * Params:
      * type: return type
-     * vector: you vector
+     * vector: your vector
      * index: item index 
 3. FREE_VECTOR(vector)
    * Free data in vector and set capacity to 0
    * Params:
-     * vector: you vector
+     * vector: your vector
 
 Example:
 ```c
