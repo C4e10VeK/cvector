@@ -33,7 +33,7 @@ My realization vector from c++ in C
      * vector: you vector
      * typeSize: syze of type which contains in vector
 2. GET_VECTOR_ITEM(type, vector, index)
-   * Get value by type using in vector
+   * Get value by type used in vector
    * Params:
      * type: return type
      * vector: you vector
