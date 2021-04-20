@@ -18,7 +18,14 @@ My realization vector from c++ in C
    * Params:
       * Vector*: you vector
       * data: data to add vector
-4. cVectorGetItem(Vector*, index)
+4. cVectorAddItemByIndex(Vector*, data, index)
+   * emplace data in vector by index
+   * Params:
+     * Vector*: you vector
+     * data: data to add vector
+     * index: index data in vector
+   * error: index out of range
+5. cVectorGetItem(Vector*, index)
    * Get data from vector from index
    * Params:
      * Vector*: you vector
@@ -58,6 +65,7 @@ Example:
         cVectorAddItem(&vec, &a);
         a = 3;
         cVectorAddItem(&vec, &a);
+        cVectorAddItemByIndex(&vec, &a, 2);
 
         a = GET_VECTOR_ITEM(int, vec, 1); 
         // or a = GET_VECTOR_ITEM(typeof(a), vec, 1);

@@ -58,6 +58,24 @@ void cVectorResize(Vector* vector, size_t newSize);
 void cVectorAddItem(Vector* vector, void* data);
 
 /*
+ * Function: cVectorAddItemByIndex
+ * ---------------------
+ *
+ * emplace data in vector by index
+ * 
+ * vector: you vector struct
+ *
+ * data: data to add vector
+ * 
+ * index: index data int vector
+ *
+ * error:
+ * index out of range
+ *
+ */
+void cVectorAddItemByIndex(Vector* vector, void* data, size_t index);
+
+/*
  * Function: cVectorGetItem
  * ---------------------
  *
@@ -67,7 +85,7 @@ void cVectorAddItem(Vector* vector, void* data);
  * 
  * vector: you vector struct
  *
- * index: index data from vector
+ * index: index data in vector
  *
  * return: data in vector as void*
  * 

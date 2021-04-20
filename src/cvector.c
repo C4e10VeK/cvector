@@ -35,18 +35,29 @@ void cVectorAddItem(Vector *vector, void *data)
 {
     if (vector->size >= vector->_capacity)
     {
-        cVectorResize(vector, vector->_capacity + 1);
+        cVectorResize(vector, vector->_capacity + 5);
     }
 
-    memcpy(vector->_items + vector->size * vector->_typesize, data, sizeof(void));
+    memcpy(vector->_items + vector->size * vector->_typesize, data, vector->_typesize);
     vector->size++;
+}
+
+void cVectorAddItemByIndex(Vector *vector, void *data, size_t index)
+{
+    if (index >= vector->_capacity) 
+    {
+        fprintf(stderr, "Index out of range in %s\n", __FUNCTION__);
+        exit(1);
+    }
+
+    memcpy(vector->_items + index * vector->_typesize, data, vector->_typesize);
 }
 
 void* cVectorGetItem(Vector *vector, size_t index)
 {
     if (index >= vector->_capacity) 
     {
-        fprintf(stderr, "index out of range\n");
+        fprintf(stderr, "Index out of range in %s\n", __FUNCTION__);
         exit(1);
     }
 
