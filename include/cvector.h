@@ -22,7 +22,7 @@ typedef struct Vector
  *
  * p.s. use macro INIT_VECTOR to init vector by default size
  *
- * vector: you vector struct
+ * vector: your vector struct
  *
  * capacity: start vector size if size = 0 then default size = 10
  *
@@ -37,7 +37,7 @@ void cVectorInit(Vector* vector, size_t capacity, size_t typesize);
  *
  * resize vector
  *
- * vector: you vector struct
+ * vector: your vector struct
  *
  * newSize: new size for vector
  *
@@ -50,7 +50,7 @@ void cVectorResize(Vector* vector, size_t newSize);
  *
  * emplace data back vector
  * 
- * vector: you vector struct
+ * vector: your vector struct
  *
  * data: data to add vector
  *
@@ -63,7 +63,7 @@ void cVectorAddItem(Vector* vector, void* data);
  *
  * emplace data in vector by index
  * 
- * vector: you vector struct
+ * vector: your vector struct
  *
  * data: data to add vector
  * 
@@ -73,7 +73,7 @@ void cVectorAddItem(Vector* vector, void* data);
  * index out of range
  *
  */
-void cVectorAddItemByIndex(Vector* vector, void* data, size_t index);
+void cVectorSetItemByIndex(Vector* vector, void* data, size_t index);
 
 /*
  * Function: cVectorGetItem
@@ -83,7 +83,7 @@ void cVectorAddItemByIndex(Vector* vector, void* data, size_t index);
  *
  * p.s. use macro GET_VECTOR_ITEM to get value by type used in vector
  * 
- * vector: you vector struct
+ * vector: your vector struct
  *
  * index: index data in vector
  *

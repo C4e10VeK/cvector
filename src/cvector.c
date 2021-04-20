@@ -42,9 +42,9 @@ void cVectorAddItem(Vector *vector, void *data)
     vector->size++;
 }
 
-void cVectorAddItemByIndex(Vector *vector, void *data, size_t index)
+void cVectorSetItemByIndex(Vector *vector, void *data, size_t index)
 {
-    if (index >= vector->_capacity) 
+    if (index > vector->size - 1) 
     {
         fprintf(stderr, "Index out of range in %s\n", __FUNCTION__);
         exit(1);
