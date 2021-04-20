@@ -4,13 +4,14 @@
 #include <stdio.h>
 
 #define INIT_VECTOR(vector, typeSize) cVectorInit(&vector, 10, typeSize)
-#define GET_VECTOR_ITEM(var, vector, index) var = *(typeof(var)*)cVectorGetItem(&vector, index)
+#define GET_VECTOR_ITEM(type, vector, index) *(type*)cVectorGetItem(&vector, index)
 #define FREE_VECTOR(vector) cVectorResize(&vector, 0)
 
 typedef struct Vector
 {
     void* _items;
-    size_t capacity, _pos, _typesize;
+    size_t _capacity, _typesize;
+    size_t size;
 } Vector;
 
 /*

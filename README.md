@@ -27,18 +27,18 @@ My realization vector from c++ in C
    * error: index out of range
 
 ### Macros
-1. INIT_VECTOR
+1. INIT_VECTOR(vector, typeSize)
    * Init new vector by default size
    * Params:
      * vector: you vector
      * typeSize: syze of type which contains in vector
-2. GET_VECTOR_ITEM
+2. GET_VECTOR_ITEM(type, vector, index)
    * Get value by type using in vector
    * Params:
-     * var: varible for writing item in vector
+     * type: return type
      * vector: you vector
      * index: item index 
-3. FREE_VECTOR
+3. FREE_VECTOR(vector)
    * Free data in vector and set capacity to 0
    * Params:
      * vector: you vector
@@ -59,7 +59,8 @@ Example:
         a = 3;
         cVectorAddItem(&vec, &a);
 
-        GET_VECTOR_ITEM(a, vec, 1);
+        a = GET_VECTOR_ITEM(int, vec, 1); 
+        // or a = GET_VECTOR_ITEM(typeof(a), vec, 1);
 
         printf("%i\n", a);
 

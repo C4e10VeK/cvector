@@ -6,14 +6,14 @@
 
 void cVectorInit(Vector *vector, size_t capacity, size_t typesize)
 {
-    vector->capacity = capacity;
+    vector->_capacity = capacity;
 
-    if (capacity == 0) vector->capacity = START_CAPACITY;
+    if (capacity == 0) vector->_capacity = START_CAPACITY;
 
-    vector->_pos = 0;
+    vector->size = 0;
     vector->_typesize = typesize;
 
-    vector->_items = calloc(vector->capacity, typesize);
+    vector->_items = calloc(vector->_capacity, typesize);
 }
 
 void cVectorResize(Vector *vector, size_t newSize)
@@ -21,30 +21,30 @@ void cVectorResize(Vector *vector, size_t newSize)
     if (newSize < 1)
     {
         free(vector->_items);
-        vector->capacity = 0;
-        vector->_pos = 0;
+        vector->_capacity = 0;
+        vector->size = 0;
 
         return;
     }
 
-    vector->capacity = newSize;   
+    vector->_capacity = newSize;   
     vector->_items = realloc(vector->_items, newSize);
 }
 
 void cVectorAddItem(Vector *vector, void *data)
 {
-    if (vector->_pos >= vector->capacity)
+    if (vector->size >= vector->_capacity)
     {
-        cVectorResize(vector, vector->capacity + 1);
+        cVectorResize(vector, vector->_capacity + 1);
     }
 
-    memcpy(vector->_items + vector->_pos * vector->_typesize, data, sizeof(void));
-    vector->_pos++;
+    memcpy(vector->_items + vector->size * vector->_typesize, data, sizeof(void));
+    vector->size++;
 }
 
 void* cVectorGetItem(Vector *vector, size_t index)
 {
-    if (index >= vector->capacity) 
+    if (index >= vector->_capacity) 
     {
         fprintf(stderr, "index out of range\n");
         exit(1);
