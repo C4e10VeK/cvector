@@ -80,7 +80,7 @@ Example:
         cVectorAddItem(&vec, &a);
         cVectorSetItemByIndex(&vec, &a, 1);
 
-        ADD_VCTOR_RANGE(vec, z);
+        ADD_VECTOR_RANGE(vec, z);
 
         a = GET_VECTOR_ITEM(int, vec, 3); 
         // or a = GET_VECTOR_ITEM(typeof(a), vec, 3);
