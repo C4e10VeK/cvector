@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 #define INIT_VECTOR(vector, type) cVectorInit(&vector, 10, sizeof(type))
-#define ADD_VCTOR_RANGE(vector, data) cVectorAddRange(&vector, data, (sizeof(data)/sizeof(data[0])));
+#define ADD_VECTOR_RANGE(vector, data) cVectorAddRange(&vector, data, (sizeof(data)/sizeof(data[0])));
 #define GET_VECTOR_ITEM(type, vector, index) *(type*)cVectorGetItem(&vector, index)
 #define FREE_VECTOR(vector) cVectorResize(&vector, 0)
 
