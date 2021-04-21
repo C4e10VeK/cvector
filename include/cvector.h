@@ -3,15 +3,15 @@
 
 #include <stdio.h>
 
-#define INIT_VECTOR(vector, typeSize) cVectorInit(&vector, 10, typeSize)
+#define INIT_VECTOR(vector, type) cVectorInit(&vector, 10, sizeof(type))
+#define ADD_VCTOR_RANGE(vector, data) cVectorAddRange(&vector, data, (sizeof(data)/sizeof(data[0])));
 #define GET_VECTOR_ITEM(type, vector, index) *(type*)cVectorGetItem(&vector, index)
 #define FREE_VECTOR(vector) cVectorResize(&vector, 0)
 
 typedef struct Vector
 {
     void* _items;
-    size_t _capacity, _typesize;
-    size_t size;
+    size_t _capacity, _typesize, _size;
 } Vector;
 
 /*
@@ -56,6 +56,21 @@ void cVectorResize(Vector* vector, size_t newSize);
  *
  */
 void cVectorAddItem(Vector* vector, void* data);
+
+/*
+ * Function: cVectorAddRange
+ * ---------------------
+ *
+ * emplace array to vector
+ * 
+ * vector: your vector struct
+ *
+ * data: array to add vector
+ * 
+ * itemCount: item count in data
+ *
+ */
+void cVectorAddRange(Vector* vector, void* data, size_t itemCount);
 
 /*
  * Function: cVectorAddItemByIndex
