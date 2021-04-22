@@ -1,6 +1,38 @@
 # Vector in C
 My realization vector from c++ in C
 
+## Example
+```c
+    #include <stdio.h>
+    #include <cvector.h>
+
+    int main()
+    {
+        Vector vec;
+        int a = 56;
+        int z[] = {0, 56, 10};
+
+        VECTOR_INIT(vec, int);
+
+        cVectorAddItem(&vec, &a);
+        
+        a = 3;
+        cVectorAddItem(&vec, &a);
+        cVectorSetItemByIndex(&vec, &a, 1);
+
+        VECTOR_ADD_RANGE(vec, z);
+
+        a = VECTOR_GET_ITEM(int, vec, 3); 
+        // or a = VECTOR_GET_ITEM(typeof(a), vec, 3);
+
+        printf("%i\n", a);
+
+        VECTOR_FREE(vec);
+
+        return 0;
+    }
+```
+
 ## Functions
 1. cVectorInit(Vector*, capacity, typeSize)
    * Init new vector structur
@@ -60,35 +92,3 @@ My realization vector from c++ in C
    * Free data in vector and set capacity to 0
    * Params:
      * vector: your vector
-
-## Example:
-```c
-    #include <stdio.h>
-    #include <cvector.h>
-
-    int main()
-    {
-        Vector vec;
-        int a = 56;
-        int z[] = {0, 56, 10};
-
-        VECTOR_INIT(vec, int);
-
-        cVectorAddItem(&vec, &a);
-        
-        a = 3;
-        cVectorAddItem(&vec, &a);
-        cVectorSetItemByIndex(&vec, &a, 1);
-
-        VECTOR_ADD_RANGE(vec, z);
-
-        a = VECTOR_GET_ITEM(int, vec, 3); 
-        // or a = VECTOR_GET_ITEM(typeof(a), vec, 3);
-
-        printf("%i\n", a);
-
-        VECTOR_FREE(vec);
-
-        return 0;
-    }
-```
