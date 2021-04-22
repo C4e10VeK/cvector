@@ -1,7 +1,7 @@
 # Vector in C
 My realization vector from c++ in C
 
-### Functions
+## Functions
 1. cVectorInit(Vector*, capacity, typeSize)
    * Init new vector structur
    * Params:
@@ -39,7 +39,7 @@ My realization vector from c++ in C
    * return data as void*
    * error: index out of range
 
-### Macros
+## Macros
 1. VECTOR_INIT(vector, type)
    * Init new vector by default size
    * Params:
@@ -61,7 +61,7 @@ My realization vector from c++ in C
    * Params:
      * vector: your vector
 
-Example:
+## Example:
 ```c
     #include <stdio.h>
     #include <cvector.h>
