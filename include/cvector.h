@@ -3,10 +3,10 @@
 
 #include <stdio.h>
 
-#define INIT_VECTOR(vector, type) cVectorInit(&vector, 10, sizeof(type))
-#define ADD_VECTOR_RANGE(vector, data) cVectorAddRange(&vector, data, (sizeof(data)/sizeof(data[0])));
-#define GET_VECTOR_ITEM(type, vector, index) *(type*)cVectorGetItem(&vector, index)
-#define FREE_VECTOR(vector) cVectorResize(&vector, 0)
+#define VECTOR_INIT(vector, type) cVectorInit(&vector, 10, sizeof(type))
+#define VECTOR_ADD_RANGE(vector, data) cVectorAddRange(&vector, data, (sizeof(data)/sizeof(data[0])));
+#define VECTOR_GET_ITEM(type, vector, index) *(type*)cVectorGetItem(&vector, index)
+#define VECTOR_FREE(vector) cVectorResize(&vector, 0)
 
 typedef struct Vector
 {
@@ -20,7 +20,7 @@ typedef struct Vector
  *
  * init new vector struct
  *
- * p.s. use macro INIT_VECTOR to init vector by default size
+ * p.s. use macro VECTOR_INIT to init vector by default size
  *
  * vector: your vector struct
  *
@@ -96,7 +96,7 @@ void cVectorSetItemByIndex(Vector* vector, void* data, size_t index);
  *
  * get data from vector from index
  *
- * p.s. use macro GET_VECTOR_ITEM to get value by type used in vector
+ * p.s. use macro VECTOR_GET_ITEM to get value by type used in vector
  * 
  * vector: your vector struct
  *

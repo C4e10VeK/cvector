@@ -40,23 +40,23 @@ My realization vector from c++ in C
    * error: index out of range
 
 ### Macros
-1. INIT_VECTOR(vector, typeSize)
+1. VECTOR_INIT(vector, typeSize)
    * Init new vector by default size
    * Params:
      * vector: your vector
      * type: type which contains in vector
-2. ADD_VECTOR_RANGE(vector, data)
+2. VECTOR_ADD_RANGE(vector, data)
    * Add array in vector
    * params:
      * vector: your vector
      * data: array which adding in vector
-3. GET_VECTOR_ITEM(type, vector, index)
+3. VECTOR_GET_ITEM(type, vector, index)
    * Get value by type used in vector
    * Params:
      * type: return type
      * vector: your vector
      * index: item index 
-4. FREE_VECTOR(vector)
+4. VECTOR_FREE(vector)
    * Free data in vector and set capacity to 0
    * Params:
      * vector: your vector
@@ -72,7 +72,7 @@ Example:
         int a = 56;
         int z[] = {0, 56, 10};
 
-        INIT_VECTOR(vec, int);
+        VECTOR_INIT(vec, int);
 
         cVectorAddItem(&vec, &a);
         
@@ -80,14 +80,14 @@ Example:
         cVectorAddItem(&vec, &a);
         cVectorSetItemByIndex(&vec, &a, 1);
 
-        ADD_VECTOR_RANGE(vec, z);
+        VECTOR_ADD_RANGE(vec, z);
 
-        a = GET_VECTOR_ITEM(int, vec, 3); 
-        // or a = GET_VECTOR_ITEM(typeof(a), vec, 3);
+        a = VECTOR_GET_ITEM(int, vec, 3); 
+        // or a = VECTOR_GET_ITEM(typeof(a), vec, 3);
 
         printf("%i\n", a);
 
-        FREE_VECTOR(vec);
+        VECTOR_FREE(vec);
 
         return 0;
     }
