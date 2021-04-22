@@ -40,7 +40,7 @@ My realization vector from c++ in C
    * error: index out of range
 
 ### Macros
-1. VECTOR_INIT(vector, typeSize)
+1. VECTOR_INIT(vector, type)
    * Init new vector by default size
    * Params:
      * vector: your vector
