@@ -16,7 +16,7 @@ void cVectorInit(Vector *vector, size_t capacity, size_t typesize)
     vector->_items = calloc(vector->_capacity, typesize);
 }
 
-void cVectorResize(Vector *vector, size_t newSize)
+bool cVectorResize(Vector *vector, size_t newSize)
 {
     void* pm;
 
@@ -26,24 +26,26 @@ void cVectorResize(Vector *vector, size_t newSize)
         vector->_capacity = 0;
         vector->_size = 0;
 
-        return;
+        return true;
     }
 
     pm = realloc(vector->_items, newSize * vector->_typesize);
     if (pm == NULL) 
     {
-        return;
+        return false;
     }
 
     vector->_capacity = newSize;   
     vector->_items = pm;
+
+    return true;
 }
 
 void cVectorAddItem(Vector *vector, void *data)
 {
     if (vector->_size >= vector->_capacity)
     {
-        cVectorResize(vector, vector->_capacity + 5);
+        if(!cVectorResize(vector, vector->_capacity + 5)) return;
     }
 
     memcpy(vector->_items + vector->_size * vector->_typesize, data, vector->_typesize);
@@ -54,12 +56,12 @@ void cVectorAddRange(Vector *vector, void *data, size_t itemCount)
 {
     if (vector->_size >= vector->_capacity)
     {
-        cVectorResize(vector, vector->_capacity + 5);
+        if(!cVectorResize(vector, vector->_capacity + 5)) return;
     }
 
     if (itemCount >= (vector->_capacity - vector->_size))
     {
-        cVectorResize(vector, vector->_capacity + itemCount);
+        if(!cVectorResize(vector, vector->_capacity + itemCount)) return;
     }
 
     memcpy(vector->_items + vector->_size * vector->_typesize, data, itemCount * vector->_typesize);

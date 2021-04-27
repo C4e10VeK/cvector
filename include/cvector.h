@@ -2,6 +2,7 @@
 #define CVOXEL_CVOXEL_H
 
 #include <stdio.h>
+#include <stdbool.h>
 
 #define VECTOR_INIT(vector, type) cVectorInit(&vector, 10, sizeof(type))
 #define VECTOR_ADD_RANGE(vector, data) cVectorAddRange(&vector, data, (sizeof(data)/sizeof(data[0])));
@@ -42,7 +43,7 @@ void cVectorInit(Vector* vector, size_t capacity, size_t typesize);
  * newSize: new size for vector
  *
  */
-void cVectorResize(Vector* vector, size_t newSize);
+bool cVectorResize(Vector* vector, size_t newSize);
 
 /*
  * Function: cVectorAddItem
