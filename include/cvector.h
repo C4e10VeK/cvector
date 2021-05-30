@@ -6,7 +6,7 @@
 
 #define VECTOR_INIT(vector, type) cVectorInit(&vector, 10, sizeof(type))
 #define VECTOR_ADD_RANGE(vector, data) cVectorAddRange(&vector, data, (sizeof(data)/sizeof(data[0])));
-#define VECTOR_GET_ITEM(type, vector, index) *(type*)cVectorGetItem(&vector, index)
+#define VECTOR_GET_ITEM(type, vector, index) (type*)cVectorGetItem(&vector, index)
 #define VECTOR_FREE(vector) cVectorResize(&vector, 0)
 
 typedef struct Vector

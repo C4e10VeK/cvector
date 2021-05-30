@@ -9,6 +9,7 @@ My realization vector from c++ in C
     int main()
     {
         Vector vec;
+        int* b = NULL;
         int a = 56;
         int z[] = {0, 56, 10};
 
@@ -22,10 +23,9 @@ My realization vector from c++ in C
 
         VECTOR_ADD_RANGE(vec, z);
 
-        a = VECTOR_GET_ITEM(int, vec, 3); 
-        // or a = VECTOR_GET_ITEM(typeof(a), vec, 3);
+        b = VECTOR_GET_ITEM(int, vec, 3);
 
-        printf("%i\n", a);
+        printf("%i\n", *b);
 
         VECTOR_FREE(vec);
 
