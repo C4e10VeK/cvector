@@ -15,7 +15,7 @@ typedef struct Vector
     size_t _capacity, _typesize, _size;
 } Vector;
 
-/*
+/**
  * Function: cVectorInit
  * ---------------------
  *
@@ -32,7 +32,7 @@ typedef struct Vector
  */
 void cVectorInit(Vector* vector, size_t capacity, size_t typesize);
 
-/*
+/**
  * Function: cVectorResize
  * ---------------------
  *
@@ -46,7 +46,7 @@ void cVectorInit(Vector* vector, size_t capacity, size_t typesize);
  */
 bool cVectorResize(Vector* vector, size_t newSize);
 
-/*
+/**
  * Function: cVectorAddItem
  * ---------------------
  *
@@ -59,7 +59,7 @@ bool cVectorResize(Vector* vector, size_t newSize);
  */
 void cVectorAddItem(Vector* vector, void* data);
 
-/*
+/**
  * Function: cVectorAddRange
  * ---------------------
  *
@@ -74,7 +74,7 @@ void cVectorAddItem(Vector* vector, void* data);
  */
 void cVectorAddRange(Vector* vector, void* data, size_t itemCount);
 
-/*
+/**
  * Function: cVectorAddItemByIndex
  * ---------------------
  *
@@ -91,7 +91,7 @@ void cVectorAddRange(Vector* vector, void* data, size_t itemCount);
  */
 void cVectorSetItemByIndex(Vector* vector, void* data, size_t index);
 
-/*
+/**
  * Function: cVectorGetItem
  * ---------------------
  *
