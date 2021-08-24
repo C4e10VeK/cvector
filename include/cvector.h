@@ -23,11 +23,11 @@ typedef struct Vector
  *
  * p.s. use macro VECTOR_INIT to init vector by default size
  *
- * vector: your vector struct
+ * @param vector - your vector struct
  *
- * capacity: start vector size if size = 0 then default size = 10
+ * @param capacity - start vector size if size = 0 then default size = 10
  *
- * typeSize: size of type which contains in vector
+ * @param typeSize-  size of type which contains in vector
  *
  */
 void cVectorInit(Vector* vector, size_t capacity, size_t typesize);
@@ -38,10 +38,11 @@ void cVectorInit(Vector* vector, size_t capacity, size_t typesize);
  *
  * resize vector
  *
- * vector: your vector struct
+ * @param vector - your vector struct
  *
- * newSize: new size for vector
- *
+ * @param newSize - new size for vector
+ * 
+ * @return true if vectar has been resize, else return false
  */
 bool cVectorResize(Vector* vector, size_t newSize);
 
@@ -51,9 +52,9 @@ bool cVectorResize(Vector* vector, size_t newSize);
  *
  * emplace data back vector
  * 
- * vector: your vector struct
+ * @param vector - your vector struct
  *
- * data: data to add vector
+ * @param data - data to add vector
  *
  */
 void cVectorAddItem(Vector* vector, void* data);
@@ -64,11 +65,11 @@ void cVectorAddItem(Vector* vector, void* data);
  *
  * emplace array to vector
  * 
- * vector: your vector struct
+ * @param vector - your vector struct
  *
- * data: array to add vector
+ * @param data - array to add vector
  * 
- * itemCount: item count in data
+ * @param itemCount - item count in data
  *
  */
 void cVectorAddRange(Vector* vector, void* data, size_t itemCount);
@@ -79,14 +80,13 @@ void cVectorAddRange(Vector* vector, void* data, size_t itemCount);
  *
  * emplace data in vector by index
  * 
- * vector: your vector struct
+ * @param vector - your vector struct
  *
- * data: data to add vector
+ * @param data - data to add vector
  * 
- * index: index data int vector
+ * @param index - index data int vector
  *
- * error:
- * index out of range
+ * @exception index out of range
  *
  */
 void cVectorSetItemByIndex(Vector* vector, void* data, size_t index);
@@ -99,14 +99,13 @@ void cVectorSetItemByIndex(Vector* vector, void* data, size_t index);
  *
  * p.s. use macro VECTOR_GET_ITEM to get value by type used in vector
  * 
- * vector: your vector struct
+ * @param vector - your vector struct
  *
- * index: index data in vector
+ * @param index - index data in vector
  *
- * return: data in vector as void*
+ * @return data in vector as void*
  * 
- * error:
- * index out of range
+ * @exception index out of range
  *
  */
 void* cVectorGetItem(Vector* vector, size_t index);
