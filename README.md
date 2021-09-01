@@ -5,11 +5,11 @@ My realization vector from c++ in C
 ```c
     #include <cvector.h>
 
-	Vector(int); // intVector
-	Vector(float); // floatVector
+    Vector(int); // intVector
+    Vector(float); // floatVector
 
-	int main()
-	{
+    int main()
+    {
     	intVector test = cVectorInit(int, 0);
     	floatVector test2 = cVectorInit(float, 2);
     	cVectorPush(test, 6);
@@ -23,6 +23,6 @@ My realization vector from c++ in C
     	cVectorFree(test);
 
     	return 0;
-	}
+    }
 ```
 
