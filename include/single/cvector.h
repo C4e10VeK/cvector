@@ -23,10 +23,10 @@ typedef struct
 
 #define Vector(type) \
     typedef struct \
-	{ \
-		type *items; \
-		size_t _capacity, _typeSize, _size; \
-	} *type##Vector
+    { \
+	type *items; \
+	size_t _capacity, _typeSize, _size; \
+    } *type##Vector
 
 /**
  *
