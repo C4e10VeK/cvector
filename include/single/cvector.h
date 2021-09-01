@@ -1,5 +1,5 @@
-#ifndef CVOXEL_CVOXEL_H
-#define CVOXEL_CVOXEL_H
+#ifndef CVECTOR_CVECTOR_H
+#define CVECTOR_CVECTOR_H
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -10,23 +10,27 @@
 
 #define START_CAPACITY 10
 
-#define VECTOR_INIT(vector, type) cVectorInit(&vector, 10, sizeof(type))
-#define VECTOR_ADD_RANGE(vector, data) cVectorAddRange(&vector, data, (sizeof(data)/sizeof(data[0])))
-#define VECTOR_GET_ITEM(type, vector, index) (type*)cVectorGetItem(&vector, index)
-#define VECTOR_FREE(vector) cVectorResize(&vector, 0)
+#define cVectorInit(type, capacity) (type##Vector)cVectorInit_(capacity, sizeof(type))
+#define cVectorPushRange(vector, data) cVectorPushRange_((BaseVector*)vector, data, (sizeof(data)/sizeof(data[0])))
+#define cVectorPush(vector, item) (cVectorPushItem_((BaseVector*)vector, &(typeof(*vector->items)){item}))
+#define cVectorFree(vector) (cVectorResize_((BaseVector*)vector, 0))
 
-typedef struct Vector
+typedef struct
 {
     void* _items;
-    size_t _capacity, _typesize, _size;
-} Vector;
+    size_t _capacity, _typeSize, _size;
+} BaseVector;
+
+#define Vector(type) \
+    typedef struct \
+	{ \
+		type *items; \
+		size_t _capacity, _typeSize, _size; \
+	} *type##Vector
 
 /**
- * Function: cVectorInit
- * ---------------------
  *
- * init new vector struct
- *
+ * @breif init new vector struct.
  * p.s. use macro VECTOR_INIT to init vector by default size
  *
  * @param vector - your vector struct
@@ -35,32 +39,34 @@ typedef struct Vector
  *
  * @param typeSize-  size of type which contains in vector
  *
+ * @return pointer to base vector struct
  */
-CVECTOR_INLINE void cVectorInit(Vector* vector, size_t capacity, size_t typesize)
+CVECTOR_INLINE BaseVector *cVectorInit_(size_t capacity, size_t typesize)
 {
+    BaseVector *vector = calloc(1, sizeof(BaseVector));
     vector->_capacity = capacity;
 
     if (capacity == 0) vector->_capacity = START_CAPACITY;
 
     vector->_size = 0;
-    vector->_typesize = typesize;
+    vector->_typeSize = typesize;
 
     vector->_items = calloc(vector->_capacity, typesize);
+
+    return vector;
 }
 
 /**
- * Function: cVectorResize
- * ---------------------
  *
- * resize vector
+ * @breif resize vector
  *
  * @param vector - your vector struct
  *
  * @param newSize - new size for vector
- * 
+ *
  * @return true if vectar has been resize, else return false
  */
-CVECTOR_INLINE bool cVectorResize(Vector* vector, size_t newSize)
+CVECTOR_INLINE bool cVectorResize_(BaseVector* vector, size_t newSize)
 {
     void* pm;
 
@@ -69,11 +75,12 @@ CVECTOR_INLINE bool cVectorResize(Vector* vector, size_t newSize)
         free(vector->_items);
         vector->_capacity = 0;
         vector->_size = 0;
+        free(vector);
 
         return true;
     }
 
-    pm = realloc(vector->_items, newSize * vector->_typesize);
+    pm = realloc(vector->_items, newSize * vector->_typeSize);
     if (pm == NULL) 
     {
         return false;
@@ -86,32 +93,28 @@ CVECTOR_INLINE bool cVectorResize(Vector* vector, size_t newSize)
 }
 
 /**
- * Function: cVectorAddItem
- * ---------------------
  *
- * emplace data back vector
+ * @breif emplace data back vector
  * 
  * @param vector - your vector struct
  *
  * @param data - data to add vector
  *
  */
-CVECTOR_INLINE void cVectorAddItem(Vector* vector, void* data)
+CVECTOR_INLINE void cVectorPushItem_(BaseVector* vector, void* data)
 {
     if (vector->_size >= vector->_capacity)
     {
-        if(!cVectorResize(vector, vector->_capacity + 5)) return;
+        if(!cVectorResize_(vector, vector->_capacity + 5)) return;
     }
 
-    memcpy(vector->_items + vector->_size * vector->_typesize, data, vector->_typesize);
+    memcpy(vector->_items + vector->_size * vector->_typeSize, data, vector->_typeSize);
     vector->_size++;
 }
 
 /**
- * Function: cVectorAddRange
- * ---------------------
  *
- * emplace array to vector
+ * @breif emplace array to vector
  * 
  * @param vector - your vector struct
  *
@@ -120,74 +123,21 @@ CVECTOR_INLINE void cVectorAddItem(Vector* vector, void* data)
  * @param itemCount - item count in data
  *
  */
-CVECTOR_INLINE void cVectorAddRange(Vector* vector, void* data, size_t itemCount)
+CVECTOR_INLINE void cVectorPushRange_(BaseVector* vector, void* data, size_t itemCount)
 {
     if (vector->_size >= vector->_capacity)
     {
-        if(!cVectorResize(vector, vector->_capacity + 5)) return;
+        if(!cVectorResize_(vector, vector->_capacity + 5)) return;
     }
 
     if (itemCount >= (vector->_capacity - vector->_size))
     {
-        if(!cVectorResize(vector, vector->_capacity + itemCount)) return;
+        if(!cVectorResize_(vector, vector->_capacity + itemCount)) return;
     }
 
-    memcpy(vector->_items + vector->_size * vector->_typesize, data, itemCount * vector->_typesize);
+    memcpy(vector->_items + vector->_size * vector->_typeSize, data, itemCount * vector->_typeSize);
     vector->_size += itemCount;
 }
 
-/**
- * Function: cVectorAddItemByIndex
- * ---------------------
- *
- * emplace data in vector by index
- * 
- * @param vector - your vector struct
- *
- * @param data - data to add vector
- * 
- * @param index - index data int vector
- *
- * @exception index out of range
- *
- */
-CVECTOR_INLINE void cVectorSetItemByIndex(Vector* vector, void* data, size_t index)
-{
-    if (index >= vector->_size) 
-    {
-        fprintf(stderr, "Index out of range in %s\n", __FUNCTION__);
-        exit(1);
-    }
+#endif //CVECTOR_CVECTOR_H
 
-    memcpy(vector->_items + index * vector->_typesize, data, vector->_typesize);
-}
-
-/**
- * Function: cVectorGetItem
- * ---------------------
- *
- * get data from vector from index
- *
- * p.s. use macro VECTOR_GET_ITEM to get value by type used in vector
- * 
- * @param vector - your vector struct
- *
- * @param index - index data in vector
- *
- * @return data in vector as void*
- * 
- * @exception index out of range
- *
- */
-CVECTOR_INLINE void* cVectorGetItem(Vector* vector, size_t index)
-{
-    if (index >= vector->_capacity) 
-    {
-        fprintf(stderr, "Index out of range in %s\n", __FUNCTION__);
-        exit(1);
-    }
-
-    return (vector->_items + index * vector->_typesize);
-}
-
-#endif
