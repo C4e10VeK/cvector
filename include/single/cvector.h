@@ -11,8 +11,9 @@
 #define START_CAPACITY 10
 
 #define cVectorInit(type, capacity) (type##Vector)cVectorInit_(capacity, sizeof(type))
+#define cVectorResize(vector, size) (cVectorResize_((BaseVector*)vector, size))
 #define cVectorPushRange(vector, data) cVectorPushRange_((BaseVector*)vector, data, (sizeof(data)/sizeof(data[0])))
-#define cVectorPush(vector, item) (cVectorPushItem_((BaseVector*)vector, &(typeof(*vector->items)){item}))
+#define cVectorPush(vector, args...) (cVectorPushItem_((BaseVector*)vector, &(typeof(*vector->items))args))
 #define cVectorFree(vector) (cVectorResize_((BaseVector*)vector, 0))
 
 typedef struct
@@ -24,8 +25,8 @@ typedef struct
 #define Vector(type) \
     typedef struct \
     { \
-	type *items; \
-	size_t _capacity, _typeSize, _size; \
+		type *items; \
+		size_t _capacity, _typeSize, _size; \
     } *type##Vector
 
 /**

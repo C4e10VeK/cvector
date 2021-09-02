@@ -5,27 +5,23 @@
 #include <stdbool.h>
 
 #define cVectorInit(type, capacity) (type##Vector)cVectorInit_(capacity, sizeof(type))
-#define cVectorPushRange(vector, data) cVectorPushRange_((BaseVector*)vector, data, (sizeof(data)/sizeof(data[0])))
-#define cVectorPush(vector, item) (cVectorPushItem_((BaseVector*)vector, &(typeof(*vector->items)){item}))
+#define cVectorResize(vector, size) (cVectorResize_((BaseVector*)vector, size))
+#define cVectorPushRange(vector, data) (cVectorPushRange_((BaseVector*)vector, data, (sizeof(data)/sizeof(data[0]))))
+#define cVectorPush(vector, args...) (cVectorPushItem_((BaseVector*)vector, &(typeof(*vector->items))args))
 #define cVectorFree(vector) (cVectorResize_((BaseVector*)vector, 0))
 
-typedef struct
-{
-    void* _items;
-    size_t _capacity, _typeSize, _size;
-} BaseVector;
+typedef struct BaseVector BaseVector;
 
 #define Vector(type) \
     typedef struct \
     { \
-	type *items; \
-	size_t _capacity, _typeSize, _size; \
+		type *items; \
+		size_t _capacity, _typeSize, _size; \
     } *type##Vector
 
 /**
  *
  * @breif init new vector struct.
- * p.s. use macro VECTOR_INIT to init vector by default size
  *
  * @param vector - your vector struct
  *

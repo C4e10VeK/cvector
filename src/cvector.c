@@ -4,6 +4,12 @@
 
 #define START_CAPACITY 10
 
+typedef struct BaseVector
+{
+    void* _items;
+    size_t _capacity, _typeSize, _size;
+} BaseVector;
+
 BaseVector *cVectorInit_(size_t capacity, size_t typesize)
 {
     BaseVector *vector = calloc(1, sizeof(BaseVector));
