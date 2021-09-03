@@ -10,9 +10,8 @@ typedef struct BaseVector
     size_t _capacity, _typeSize, _size;
 } BaseVector;
 
-BaseVector *cVectorInit_(size_t capacity, size_t typesize)
+void cVectorInit_(BaseVector *vector, size_t capacity, size_t typesize)
 {
-    BaseVector *vector = calloc(1, sizeof(BaseVector));
     vector->_capacity = capacity;
 
     if (capacity == 0) vector->_capacity = START_CAPACITY;
@@ -21,8 +20,6 @@ BaseVector *cVectorInit_(size_t capacity, size_t typesize)
     vector->_typeSize = typesize;
 
     vector->_items = calloc(vector->_capacity, typesize);
-
-    return vector;
 }
 
 bool cVectorResize_(BaseVector *vector, size_t newSize)
@@ -34,7 +31,6 @@ bool cVectorResize_(BaseVector *vector, size_t newSize)
         free(vector->_items);
         vector->_capacity = 0;
         vector->_size = 0;
-        free(vector);
 
         return true;
     }

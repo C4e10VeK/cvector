@@ -6,14 +6,14 @@
 #include <stdlib.h>
 #include <memory.h>
 
-#define CVECTOR_INLINE inline __attribute__((always_inline))
+#define CVECTOR_INLINE static inline __attribute__((always_inline))
 
 #define START_CAPACITY 10
 
-#define cVectorInit(type, capacity) (cVectorInit_(capacity, sizeof(type)))
+#define cVectorInit(vector, capacity) (cVectorInit_((BaseVector*)vector, capacity, sizeof(**vector.items)))
 #define cVectorResize(vector, size) (cVectorResize_((BaseVector*)vector, size))
 #define cVectorPushRange(vector, data) (cVectorPushRange_((BaseVector*)vector, data, (sizeof(data)/sizeof(data[0]))))
-#define cVectorPush(vector, args...) (cVectorPushItem_((BaseVector*)vector, &(typeof(*vector->items))args))
+#define cVectorPush(vector, data...) (cVectorPushItem_((BaseVector*)vector, data))
 #define cVectorFree(vector) (cVectorResize_((BaseVector*)vector, 0))
 
 typedef struct
@@ -23,11 +23,11 @@ typedef struct
 } BaseVector;
 
 #define Vector(type) \
-    typedef struct \
+    struct \
     { \
 		type *items; \
 		size_t _capacity, _typeSize, _size; \
-    } *type##Vector
+    }
 
 /**
  *
@@ -41,9 +41,8 @@ typedef struct
  *
  * @return pointer to base vector struct
  */
-CVECTOR_INLINE BaseVector *cVectorInit_(size_t capacity, size_t typesize)
+CVECTOR_INLINE void cVectorInit_(BaseVector *vector, size_t capacity, size_t typesize)
 {
-    BaseVector *vector = calloc(1, sizeof(BaseVector));
     vector->_capacity = capacity;
 
     if (capacity == 0) vector->_capacity = START_CAPACITY;
@@ -52,8 +51,6 @@ CVECTOR_INLINE BaseVector *cVectorInit_(size_t capacity, size_t typesize)
     vector->_typeSize = typesize;
 
     vector->_items = calloc(vector->_capacity, typesize);
-
-    return vector;
 }
 
 /**
@@ -66,7 +63,7 @@ CVECTOR_INLINE BaseVector *cVectorInit_(size_t capacity, size_t typesize)
  *
  * @return true if vectar has been resize, else return false
  */
-CVECTOR_INLINE bool cVectorResize_(BaseVector* vector, size_t newSize)
+CVECTOR_INLINE bool cVectorResize_(BaseVector *vector, size_t newSize)
 {
     void* pm;
 
@@ -75,7 +72,6 @@ CVECTOR_INLINE bool cVectorResize_(BaseVector* vector, size_t newSize)
         free(vector->_items);
         vector->_capacity = 0;
         vector->_size = 0;
-        free(vector);
 
         return true;
     }
@@ -101,7 +97,7 @@ CVECTOR_INLINE bool cVectorResize_(BaseVector* vector, size_t newSize)
  * @param data - data to add vector
  *
  */
-CVECTOR_INLINE void cVectorPushItem_(BaseVector* vector, void* data)
+CVECTOR_INLINE void cVectorPushItem_(BaseVector *vector, void *data)
 {
     if (vector->_size >= vector->_capacity)
     {
@@ -123,7 +119,7 @@ CVECTOR_INLINE void cVectorPushItem_(BaseVector* vector, void* data)
  * @param itemCount - item count in data
  *
  */
-CVECTOR_INLINE void cVectorPushRange_(BaseVector* vector, void* data, size_t itemCount)
+CVECTOR_INLINE void cVectorPushRange_(BaseVector *vector, void *data, size_t itemCount)
 {
     if (vector->_size >= vector->_capacity)
     {

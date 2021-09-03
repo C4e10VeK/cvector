@@ -3,6 +3,7 @@ My realization vector from c++ in C
 
 ## Example
 ```c
+#include <stdio.h>
 #include <cvector.h>
 
 typedef struct
@@ -11,23 +12,28 @@ typedef struct
     float y;
 } Vec2;
 
-Vector(Vec2); //Vec2Vector
+typedef Vector(Vec2) Vec2Vector;
 
 int main()
 {
-    Vec2Vector test = cVectorInit(Vec2, 2);	
-	
-    cVectorPush(test, {5.f, 1.f});
-	
-    printf("Vec2: %f, %f\n", test->items[0].x, test->items[0].y);
-	
-    cVectorResize(test, 10);
-	
-    printf("Vec2Vector->_capacity = %lu\n", test->_capacity);
-	
-    cVectorFree(test);
-	
+    Vec2Vector vectors;
+    cVectorInit(&vectors, 1);
+    Vec2 vector2D = {1.0f, 2.0f};
+
+    cVectorPush(&vectors, &(Vec2){5.f, 5.f});
+    cVectorPush(&vectors, &vector2D);
+
+    for (size_t i = 0; i < vectors._size; i++)
+        printf("Vec2: %f, %f\n", vectors.items[i].x, vectors.items[i].y);
+
+    cVectorResize(&vectors, 10);
+
+    printf("Vec2Vector->_capacity = %lu\n", vectors._capacity);
+
+    cVectorFree(&vectors);
+
     return 0;
 }
+
 ```
 

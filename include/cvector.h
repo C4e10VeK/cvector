@@ -4,20 +4,20 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#define cVectorInit(type, capacity) (cVectorInit_(capacity, sizeof(type)))
+#define cVectorInit(vector, capacity) (cVectorInit_((BaseVector*)vector, capacity, sizeof(**vector.items)))
 #define cVectorResize(vector, size) (cVectorResize_((BaseVector*)vector, size))
 #define cVectorPushRange(vector, data) (cVectorPushRange_((BaseVector*)vector, data, (sizeof(data)/sizeof(data[0]))))
-#define cVectorPush(vector, args...) (cVectorPushItem_((BaseVector*)vector, &(typeof(*vector->items))args))
+#define cVectorPush(vector, data...) (cVectorPushItem_((BaseVector*)vector, data))
 #define cVectorFree(vector) (cVectorResize_((BaseVector*)vector, 0))
 
 typedef struct BaseVector BaseVector;
 
 #define Vector(type) \
-    typedef struct \
+    struct \
     { \
 		type *items; \
 		size_t _capacity, _typeSize, _size; \
-    } *type##Vector
+    }
 
 /**
  *
@@ -31,7 +31,7 @@ typedef struct BaseVector BaseVector;
  *
  * @return pointer to base vector struct
  */
-BaseVector *cVectorInit_(size_t capacity, size_t typesize);
+void cVectorInit_(BaseVector *vector, size_t capacity, size_t typesize);
 
 /**
  *
@@ -54,7 +54,7 @@ bool cVectorResize_(BaseVector* vector, size_t newSize);
  * @param data - data to add vector
  *
  */
-void cVectorPushItem_(BaseVector* vector, void* data);
+void cVectorPushItem_(BaseVector *vector, void *data);
 
 /**
  *
@@ -67,6 +67,6 @@ void cVectorPushItem_(BaseVector* vector, void* data);
  * @param itemCount - item count in data
  *
  */
-void cVectorPushRange_(BaseVector* vector, void* data, size_t itemCount);
+void cVectorPushRange_(BaseVector *vector, void *data, size_t itemCount);
 
 #endif //CVECTOR_CVECTOR_H
