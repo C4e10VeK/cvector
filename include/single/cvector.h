@@ -12,7 +12,7 @@
 
 #define cVectorInit(type, capacity) (cVectorInit_(capacity, sizeof(type)))
 #define cVectorResize(vector, size) (cVectorResize_((BaseVector*)vector, size))
-#define cVectorPushRange(vector, data) cVectorPushRange_((BaseVector*)vector, data, (sizeof(data)/sizeof(data[0])))
+#define cVectorPushRange(vector, data) (cVectorPushRange_((BaseVector*)vector, data, (sizeof(data)/sizeof(data[0]))))
 #define cVectorPush(vector, args...) (cVectorPushItem_((BaseVector*)vector, &(typeof(*vector->items))args))
 #define cVectorFree(vector) (cVectorResize_((BaseVector*)vector, 0))
 
