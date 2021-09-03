@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#define cVectorInit(type, capacity) (type##Vector)cVectorInit_(capacity, sizeof(type))
+#define cVectorInit(type, capacity) (cVectorInit_(capacity, sizeof(type)))
 #define cVectorResize(vector, size) (cVectorResize_((BaseVector*)vector, size))
 #define cVectorPushRange(vector, data) (cVectorPushRange_((BaseVector*)vector, data, (sizeof(data)/sizeof(data[0]))))
 #define cVectorPush(vector, args...) (cVectorPushItem_((BaseVector*)vector, &(typeof(*vector->items))args))
@@ -27,7 +27,7 @@ typedef struct BaseVector BaseVector;
  *
  * @param capacity - start vector size if size = 0 then default size = 10
  *
- * @param typeSize-  size of type which contains in vector
+ * @param typeSize - size of type which contains in vector
  *
  * @return pointer to base vector struct
  */
