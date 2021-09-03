@@ -32,7 +32,6 @@ typedef struct
 /**
  *
  * @breif init new vector struct.
- * p.s. use macro VECTOR_INIT to init vector by default size
  *
  * @param vector - your vector struct
  *
