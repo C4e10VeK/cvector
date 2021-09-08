@@ -54,7 +54,7 @@ void cVectorPushItem_(BaseVector *vector, void *data)
         if(!cVectorResize_(vector, vector->_capacity + 5)) return;
     }
 
-    memcpy(vector->_items + vector->_size * vector->_typeSize, data, vector->_typeSize);
+    memcpy((char *)vector->_items + vector->_size * vector->_typeSize, data, vector->_typeSize);
     vector->_size++;
 }
 
@@ -70,6 +70,6 @@ void cVectorPushRange_(BaseVector *vector, void *data, size_t itemCount)
         if(!cVectorResize_(vector, vector->_capacity + itemCount)) return;
     }
 
-    memcpy(vector->_items + vector->_size * vector->_typeSize, data, itemCount * vector->_typeSize);
+    memcpy((char *)vector->_items + vector->_size * vector->_typeSize, data, itemCount * vector->_typeSize);
     vector->_size += itemCount;
 }

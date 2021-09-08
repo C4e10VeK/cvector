@@ -6,14 +6,18 @@
 #include <stdlib.h>
 #include <memory.h>
 
-#define CVECTOR_INLINE static inline __attribute__((always_inline))
+#ifdef _MSC_VER
+#   define CVECTOR_INLINE static inline
+#else
+#   define CVECTOR_INLINE static inline __attribute__((always_inline))
+#endif
 
 #define START_CAPACITY 10
 
 #define cVectorInit(vector, capacity) (cVectorInit_((BaseVector*)vector, capacity, sizeof(**vector.items)))
 #define cVectorResize(vector, size) (cVectorResize_((BaseVector*)vector, size))
 #define cVectorPushRange(vector, data) (cVectorPushRange_((BaseVector*)vector, data, (sizeof(data)/sizeof(data[0]))))
-#define cVectorPush(vector, data...) (cVectorPushItem_((BaseVector*)vector, data))
+#define cVectorPush(vector, ...) (cVectorPushItem_((BaseVector*)vector, __VA_ARGS__))
 #define cVectorFree(vector) (cVectorResize_((BaseVector*)vector, 0))
 
 typedef struct
@@ -104,7 +108,7 @@ CVECTOR_INLINE void cVectorPushItem_(BaseVector *vector, void *data)
         if(!cVectorResize_(vector, vector->_capacity + 5)) return;
     }
 
-    memcpy(vector->_items + vector->_size * vector->_typeSize, data, vector->_typeSize);
+    memcpy((char *)vector->_items + vector->_size * vector->_typeSize, data, vector->_typeSize);
     vector->_size++;
 }
 
@@ -131,7 +135,7 @@ CVECTOR_INLINE void cVectorPushRange_(BaseVector *vector, void *data, size_t ite
         if(!cVectorResize_(vector, vector->_capacity + itemCount)) return;
     }
 
-    memcpy(vector->_items + vector->_size * vector->_typeSize, data, itemCount * vector->_typeSize);
+    memcpy((char *)vector->_items + vector->_size * vector->_typeSize, data, itemCount * vector->_typeSize);
     vector->_size += itemCount;
 }
 

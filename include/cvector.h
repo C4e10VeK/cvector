@@ -7,7 +7,7 @@
 #define cVectorInit(vector, capacity) (cVectorInit_((BaseVector*)vector, capacity, sizeof(**vector.items)))
 #define cVectorResize(vector, size) (cVectorResize_((BaseVector*)vector, size))
 #define cVectorPushRange(vector, data) (cVectorPushRange_((BaseVector*)vector, data, (sizeof(data)/sizeof(data[0]))))
-#define cVectorPush(vector, data...) (cVectorPushItem_((BaseVector*)vector, data))
+#define cVectorPush(vector, ...) (cVectorPushItem_((BaseVector*)vector, __VA_ARGS__))
 #define cVectorFree(vector) (cVectorResize_((BaseVector*)vector, 0))
 
 typedef struct BaseVector BaseVector;
